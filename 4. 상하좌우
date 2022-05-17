@@ -1,0 +1,55 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+
+      Scanner sc = new Scanner(System.in);
+      
+      int N = sc.nextInt();
+      sc.nextLine(); // 버퍼지우기
+      String[] route = sc.nextLine().split(" ");
+
+      
+      int x = 1;
+      int y = 1;
+      
+      int dx[] = {-1, 1, 0, 0};
+      int dy[] = {0, 0, -1, 1};
+      String sCom[] = {"L", "R", "U", "D"};
+      
+      for(int i = 0; i < route.length; i ++) {
+        
+        String direction = route[i];
+        
+        int imsi_x = x;
+        int imsi_y = y;
+        
+        for(int j = 0; j < 4; j++) {
+          
+          if(sCom[j].equals(direction)) {
+            
+            imsi_x = imsi_x + dx[j];
+            imsi_y = imsi_y + dy[j];
+            
+          }
+          
+        }
+        
+        if((imsi_x < 1) || (imsi_y < 1) || (imsi_x > N) || (imsi_y > N)) {
+          
+          continue;
+        } 
+        
+        x = imsi_x;
+        y = imsi_y;
+
+        System.out.println(x + " " + y);
+        
+      }
+      
+      
+      
+        
+        
+    }
+}
