@@ -1,0 +1,101 @@
+import java.util.*;
+
+public class Main {
+  
+    public static int[][] map = new int[50][50];
+    public static int[][] map_layout_arrive = new int[50][50];
+    
+    public static int[] seeX = { 0, 1, 0, -1};
+    public static int[] seeY = {-1, 0, 1,  0};
+    
+    public static int visitCnt = 0;  
+    
+    public static boolean MoveYn = true;
+    
+    public static int seeIdx(int SL2, int k) {
+      
+      return ((SL2 + k + 1) % 4);
+      
+    }
+      
+    public static void main(String[] args) {
+
+      Scanner sc = new Scanner(System.in);
+
+      int a = sc.nextInt();
+      int b = sc.nextInt();
+      
+      int x1 = sc.nextInt();
+      int y1 = sc.nextInt();
+      int see1 = sc.nextInt();
+      
+      
+      for(int i = 0; i < a; i++) {
+        
+        for(int j = 0; j < b; j++) {
+        
+            map[i][j] = sc.nextInt();
+        }
+        
+      }
+      
+      int moveX = x1;
+      int moveY = y1;
+      
+      map_layout_arrive[moveX][moveY] = 1;
+      visitCnt = visitCnt + 1;
+      
+      
+      while(MoveYn) {
+        
+        for(int k = 0; k < 4; k++) {
+          
+          int nextX = moveX + seeX[seeIdx(see1, k)];
+          int nextY = moveY + seeY[seeIdx(see1, k)];
+          
+          // 물을 밟아야 하거나, 가본 땅이라면
+          if((map[nextX][nextY] == 1) || (map_layout_arrive[nextX][nextY] == 1)) {
+            
+            if(k < 3) {
+              continue;
+            } else {
+              
+              int backX = moveX - seeX[seeIdx(see1, k)];
+              int backY = moveY - seeY[seeIdx(see1, k)];
+              
+              //뒤칸이 물이면 stop
+              if(map[backX][backY] == 1) {
+                
+                MoveYn = false;
+                
+              } else {
+                
+                moveX = backX;
+                moveY = backY;
+                break;
+              }
+              
+            }
+          } else {
+            
+            moveX = nextX;
+            moveY = nextY;
+            map_layout_arrive[moveX][moveY] = 1;
+            visitCnt = visitCnt + 1;
+            
+            break;
+            
+          }
+          
+          
+        }
+
+      }
+      
+      
+         System.out.println(visitCnt);
+      
+
+        
+    }
+}
